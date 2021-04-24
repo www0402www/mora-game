@@ -40,12 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         quitBtn = findViewById(R.id.quit_btn);
         computerImage = findViewById(R.id.computer_img);
         playerImage = findViewById(R.id.player_img);
-
-
     }
 
     private void initGame() {
-
         isPlayerRound = false;
         computer.ai();
     }
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         playerImage.setVisibility(View.INVISIBLE);
 
         computer = new Computer(this);
-        computer.ai();
     }
 
     @Override
@@ -92,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     player.setMora(Player.ROCK);
                     playerImage.setImageResource(R.drawable.rock);
                     playerImage.setVisibility(View.VISIBLE);
+                    checkGameState();
                 }
                 break;
             case R.id.paper_ibn:
@@ -101,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     player.setMora(Player.PAPER);
                     playerImage.setImageResource(R.drawable.paper);
                     playerImage.setVisibility(View.VISIBLE);
+                    checkGameState();
                 }
                 break;
             case R.id.start_btn:
@@ -125,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             computerImage.setImageResource(R.drawable.paper);
         }
         isPlayerRound = true;
+
+        Log.d(TAG, "complete: " + mora);
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (state == COMPUTER_WIN) {
             Toast.makeText(this, "電腦勝利", Toast.LENGTH_SHORT).show();
         }
+
         new Thread(new Runnable() {
             public void run() {
                 try {
